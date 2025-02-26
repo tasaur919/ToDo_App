@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <style>
+      body {
+        background-color: black;
+        color: #fff;
+      }
+      .container {
+        min-height: 100px;
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        background: linear-gradient(45deg, red, orange, red);
+        border: none;
+        border-radius: 8px;
+        margin: 100px auto;
+        text-align: center;
+        padding-top: 20px;
+        min-height: 100px;
+        padding-bottom: 20px;
+      }
+      h2 {
+        color: white;
+        margin-top: 0px;
+        font-size: 30px;
+        font-weight: 900;
+      }
+      input {
+        font-size: 20px;
+        border: none;
+        border-radius: 6px;
+        padding-left: 10px;
+        height: 38px;
+      }
+      
+      button {
+        height: 38px;
+        width: 90px;
+        border-radius: 6px;
+        background-color: green;
+        color: white;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        font-weight: 800;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: 200px 170px 100px;
+        grid-gap: 20px;
+        
+        font-size: 27px;
+        padding-top: 10px;
+        grid-column-start: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="main">
+        <h2>ToDo App</h2>
+        <div class="grid-container todo">
+          <input type="text" placeholder="Enter your task" id="task" required/>
+          <input type="date" id="date" required/>
+          <button id="btn" onclick="todoItem()">Add</button>
+        </div>
+        <div id="items" class="grid-container"></div>
+      </div>
+    </div>
+    <script>
+      var todolist = [];
+      display();
+      function todoItem() {
+        var input = document.getElementById("task");
+        var date1 = document.getElementById("date");
+        let inputeItem = input.value;
+        let dateItem = date1.value;
+        if(inputeItem!='' && dateItem!=''){
+        todolist.push({ item: inputeItem, duedate: dateItem });
+        }
+        else{
+            alert('Please, Fill all fields!!')
+        }
+        display();
+        input.value = "";
+        date1.value = "";
+      }
+
+      function display() {
+        var items = document.getElementById("items");
+        var newHtml = "";
+        for (let i = 0; i < todolist.length; i++) {
+          //let item=todolist[i].item
+          //let duedate=todolist[i].duedate
+          //or destructuring
+          let { item, duedate } = todolist[i];
+           
+          newHtml += `
+                   <span>${item}</span>
+                   <span>${duedate}</span>
+                   <button onclick="todolist.splice(${i},1) ;display()">Delete</button>
+
+                `;
+        }
+
+        items.innerHTML = newHtml;
+      }
+    </script>
+  </body>
+</html>
